@@ -20,7 +20,7 @@ function lib:CreateWindow(title)
 	local Content = Instance.new("Frame")
 	
 	UI.Name = "UI"
-	UI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") or game:GetService("CoreGui")
+	UI.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui") or game:GetService("CoreGui")
 	UI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	UI.DisplayOrder = 99
 	UI.ResetOnSpawn = false
@@ -205,90 +205,93 @@ function lib:CreateWindow(title)
 	
 	local TweenService = game:GetService("TweenService")
 
-	function lib:CreateTab(title)
-		local Tab = Instance.new("TextButton")
-		local UICorner_3 = Instance.new("UICorner")
-		local Items = Instance.new("ScrollingFrame")
-		local UIPadding_2 = Instance.new("UIPadding")
-		local UIListLayout_2 = Instance.new("UIListLayout")
+function lib:CreateTab(title)
+    local Tab = Instance.new("TextButton")
+    local UICorner_3 = Instance.new("UICorner")
+    local Items = Instance.new("ScrollingFrame")
+    local UIPadding_2 = Instance.new("UIPadding")
+    local UIListLayout_2 = Instance.new("UIListLayout")
 
-		Tab.Name = "Tab"
-		Tab.Parent = Navigation
-		Tab.BackgroundColor3 = Color3.fromRGB(42, 58, 130)
-		Tab.BackgroundTransparency = 1.000
-		Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		Tab.BorderSizePixel = 0
-		Tab.Position = UDim2.new(0.0566666685, 0, 0, 0)
-		Tab.Size = UDim2.new(0, 133, 0, 32)
-		Tab.AutoButtonColor = false
-		Tab.Font = Enum.Font.Gotham
-		Tab.Text = title
-		Tab.TextColor3 = Color3.fromRGB(255, 255, 255)
-		Tab.TextSize = 14.000
-		Tab.TextTransparency = 0.800
+    Tab.Name = "Tab"
+    Tab.Parent = Navigation
+    Tab.BackgroundColor3 = Color3.fromRGB(42, 58, 130)
+    Tab.BackgroundTransparency = 1.000
+    Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Tab.BorderSizePixel = 0
+    Tab.Position = UDim2.new(0.0566666685, 0, 0, 0)
+    Tab.Size = UDim2.new(0, 133, 0, 32)
+    Tab.AutoButtonColor = false
+    Tab.Font = Enum.Font.Gotham
+    Tab.Text = title
+    Tab.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Tab.TextSize = 14.000
+    Tab.TextTransparency = 0.800
 
-		UICorner_3.Parent = Tab
+    UICorner_3.Parent = Tab
 
-		Items.Name = title
-		Items.Parent = Content
-		Items.Active = true
-		Items.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		Items.BackgroundTransparency = 2.000
-		Items.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		Items.BorderSizePixel = 0
-		Items.Size = UDim2.new(0, 405, 0, 288)
-		Items.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
-		Items.CanvasSize = UDim2.new(0, 0, 10, 0)
-		Items.ScrollBarThickness = 0
-		Items.Visible = false
-		Items.Position = UDim2.new(0, -350, 0, 0)
+    Items.Name = title
+    Items.Parent = Content
+    Items.Active = true
+    Items.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Items.BackgroundTransparency = 2.000
+    Items.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Items.BorderSizePixel = 0
+    Items.Size = UDim2.new(0, 405, 0, 288)
+    Items.ScrollBarImageColor3 = Color3.fromRGB(0, 0, 0)
+    Items.CanvasSize = UDim2.new(0, 0, 10, 0)
+    Items.ScrollBarThickness = 0
+    Items.Visible = false
+    Items.Position = UDim2.new(0, -350, 0, 0)
 
-		UIPadding_2.Parent = Items
-		UIPadding_2.PaddingTop = UDim.new(0, 6)
+    UIPadding_2.Parent = Items
+    UIPadding_2.PaddingTop = UDim.new(0, 6)
 
-		UIListLayout_2.Parent = Items
-		UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-		UIListLayout_2.Padding = UDim.new(0, 8)
+    UIListLayout_2.Parent = Items
+    UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
+    UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout_2.Padding = UDim.new(0, 8)
 
-		Tab.MouseButton1Click:Connect(function()
-			for _, child in pairs(Navigation:GetChildren()) do
-				if child:IsA("TextButton") then
-					child.TextTransparency = 0.8
-					child.BackgroundTransparency = 1
-				end
-			end
+    local function onTabClick()
+        for _, child in pairs(Navigation:GetChildren()) do
+            if child:IsA("TextButton") then
+                child.TextTransparency = 0.8
+                child.BackgroundTransparency = 1
+            end
+        end
 
-			Tab.TextTransparency = 0
-			Tab.BackgroundTransparency = 0
+        Tab.TextTransparency = 0
+        Tab.BackgroundTransparency = 0
 
-			for _, item in pairs(Content:GetChildren()) do
-				if item:IsA("ScrollingFrame") then
-					if item.Name == title then
-						item.Visible = true
+        for _, item in pairs(Content:GetChildren()) do
+            if item:IsA("ScrollingFrame") then
+                if item.Name == title then
+                    item.Visible = true
+                    local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+                    local goal = {Position = UDim2.new(0, 0, 0, 0)}
+                    local tween = TweenService:Create(item, tweenInfo, goal)
+                    tween:Play()
+                else
+                    item.Visible = false
+                end
+            end
+        end
 
-						local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-						local goal = {Position = UDim2.new(0, 0, 0, 0)}
-						local tween = TweenService:Create(item, tweenInfo, goal)
-						tween:Play()
-					else
-						item.Visible = false
-					end
-				end
-			end
+        for _, item in pairs(Content:GetChildren()) do
+            if item:IsA("ScrollingFrame") and item.Name ~= title then
+                local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+                local goal = {Position = UDim2.new(0, -350, 0, 0)}
+                local tween = TweenService:Create(item, tweenInfo, goal)
+                tween:Play()
+            end
+        end
+    end
 
-			for _, item in pairs(Content:GetChildren()) do
-				if item:IsA("ScrollingFrame") and item.Name ~= title then
-					local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-					local goal = {Position = UDim2.new(0, -350, 0, 0)}
-					local tween = TweenService:Create(item, tweenInfo, goal)
-					tween:Play()
-				end
-			end
-		end)
+    Tab.MouseButton1Click:Connect(onTabClick)
+    Tab.TouchTap:Connect(onTabClick)
 
-		return Tab, Items
-	end
+    return Tab, Items
+end
+
 
 	
 	function lib:CreateSection(title, TabParent)
@@ -311,7 +314,7 @@ function lib:CreateWindow(title)
 		local Title_7 = Instance.new("TextLabel")
 		local MouseIcon = Instance.new("ImageLabel")
 		local UIAspectRatioConstraint_4 = Instance.new("UIAspectRatioConstraint")
-
+	
 		Button.Name = "Button"
 		Button.Parent = TabParent
 		Button.BackgroundColor3 = Color3.fromRGB(7, 9, 11)
@@ -320,13 +323,13 @@ function lib:CreateWindow(title)
 		Button.Position = UDim2.new(0.0185185187, 0, 0, 0)
 		Button.Size = UDim2.new(0, 390, 0, 36)
 		Button.AutoButtonColor = false
-
+	
 		UIStroke_12.Parent = Button
 		UIStroke_12.Color = Color3.fromRGB(82, 113, 255)
-
+	
 		UICorner_16.CornerRadius = UDim.new(0, 6)
 		UICorner_16.Parent = Button
-
+	
 		Title_7.Name = "Title"
 		Title_7.Parent = Button
 		Title_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -340,7 +343,7 @@ function lib:CreateWindow(title)
 		Title_7.TextColor3 = Color3.fromRGB(255, 255, 255)
 		Title_7.TextSize = 17
 		Title_7.TextXAlignment = Enum.TextXAlignment.Left
-
+	
 		MouseIcon.Name = "MouseIcon"
 		MouseIcon.Parent = Button
 		MouseIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -351,14 +354,19 @@ function lib:CreateWindow(title)
 		MouseIcon.Size = UDim2.new(0, 21, 0, 25)
 		MouseIcon.Image = "rbxassetid://12804017021"
 		MouseIcon.ImageColor3 = Color3.fromRGB(82, 113, 255)
-
+	
 		UIAspectRatioConstraint_4.Parent = MouseIcon
-
-		Button.MouseButton1Click:Connect(function()
+	
+		local function onClick()
 			if callback then
 				callback()
 			end
-		end)
+		end
+	
+		local UserInputService = game:GetService("UserInputService")
+		Button.MouseButton1Click:Connect(onClick)
+		
+		Button.TouchTap:Connect(onClick)
 	end
 	
 	function lib:CreateToggle(title, TabParent, callback)
@@ -373,7 +381,7 @@ function lib:CreateWindow(title)
 		local UIAspectRatioConstraint_3 = Instance.new("UIAspectRatioConstraint")
 		local UIStroke_6 = Instance.new("UIStroke")
 		local UICorner_9 = Instance.new("UICorner")
-
+	
 		Toggle.Name = "Toggle"
 		Toggle.Parent = TabParent
 		Toggle.BackgroundColor3 = Color3.fromRGB(7, 9, 11)
@@ -382,14 +390,14 @@ function lib:CreateWindow(title)
 		Toggle.Position = UDim2.new(0.0185185187, 0, 0, 0)
 		Toggle.Size = UDim2.new(0, 390, 0, 36)
 		Toggle.AutoButtonColor = false
-
+	
 		UIStroke_4.Parent = Toggle
 		UIStroke_4.Color = Color3.fromRGB(82, 113, 255)
 		UIStroke_4.Transparency = 0.500
-
+	
 		UICorner_7.CornerRadius = UDim.new(0, 6)
 		UICorner_7.Parent = Toggle
-
+	
 		Title_3.Name = "Title"
 		Title_3.Parent = Toggle
 		Title_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -404,7 +412,7 @@ function lib:CreateWindow(title)
 		Title_3.TextSize = 17.000
 		Title_3.TextTransparency = 0.600
 		Title_3.TextXAlignment = Enum.TextXAlignment.Left
-
+	
 		Slide_2.Name = "Slide"
 		Slide_2.Parent = Toggle
 		Slide_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -413,14 +421,14 @@ function lib:CreateWindow(title)
 		Slide_2.BorderSizePixel = 0
 		Slide_2.Position = UDim2.new(0.85128206, 0, 0.138888896, 0)
 		Slide_2.Size = UDim2.new(0, 50, 0, 25)
-
+	
 		UIStroke_5.Parent = Slide_2
 		UIStroke_5.Color = Color3.fromRGB(82, 113, 255)
 		UIStroke_5.Transparency = 0.500
-
+	
 		UICorner_8.CornerRadius = UDim.new(1, 0)
 		UICorner_8.Parent = Slide_2
-
+	
 		Wheel_2.Name = "Wheel"
 		Wheel_2.Parent = Slide_2
 		Wheel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -429,27 +437,28 @@ function lib:CreateWindow(title)
 		Wheel_2.BorderSizePixel = 0
 		Wheel_2.Position = UDim2.new(0.119999997, 0, 0.200000003, 0)
 		Wheel_2.Size = UDim2.new(0, 23, 0, 15)
-
+	
 		UIAspectRatioConstraint_3.Parent = Wheel_2
-
+	
 		UIStroke_6.Parent = Wheel_2
 		UIStroke_6.Color = Color3.fromRGB(82, 113, 255)
 		UIStroke_6.Transparency = 0.500
-
+	
 		UICorner_9.CornerRadius = UDim.new(1, 0)
 		UICorner_9.Parent = Wheel_2
-
-		Toggle.MouseButton1Click:Connect(function()
+	
+		local UserInputService = game:GetService("UserInputService")
+		local function onClick()
 			local isActive = not Toggle:GetAttribute("IsActive")
-
+	
 			Toggle:SetAttribute("IsActive", isActive)
-
+	
 			local tweenService = game:GetService("TweenService")
-
+	
 			local titleTween = tweenService:Create(Title_3, TweenInfo.new(0.2), {
 				TextTransparency = isActive and 0 or 0.6
 			})
-
+	
 			local strokeTween = tweenService:Create(UIStroke_4, TweenInfo.new(0.2), {
 				Transparency = isActive and 0 or 0.6
 			})
@@ -461,22 +470,33 @@ function lib:CreateWindow(title)
 			local stroke3Tween = tweenService:Create(UIStroke_6, TweenInfo.new(0.2), {
 				Transparency = isActive and 0 or 0.6
 			})
-
+	
 			local wheelTween = tweenService:Create(Wheel_2, TweenInfo.new(0.3), {
 				Position = isActive and UDim2.new(0.579999983, 0, 0.200000003, 0) or UDim2.new(0.119999997, 0, 0.200000003, 0)
 			})
-
+	
 			titleTween:Play()
 			strokeTween:Play()
 			wheelTween:Play()
 			stroke2Tween:Play()
 			stroke3Tween:Play()
-
+	
 			if callback then
 				callback(isActive)
 			end
-		end)
+		end
+	
+		if UserInputService.TouchEnabled then
+			Toggle.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.Touch then
+					onClick()
+				end
+			end)
+		else
+			Toggle.MouseButton1Click:Connect(onClick)
+		end
 	end
+	
 	
 	function lib:CreateSlider(title, TabParent, min, max, callback)
 		local Slider = Instance.new("ImageButton")
@@ -489,7 +509,7 @@ function lib:CreateWindow(title)
 		local Draggable = Instance.new("Frame")
 		local UICorner_12 = Instance.new("UICorner")
 		local Value = Instance.new("TextLabel")
-
+	
 		Slider.Name = "Slider"
 		Slider.Parent = TabParent
 		Slider.BackgroundColor3 = Color3.fromRGB(7, 9, 11)
@@ -498,14 +518,14 @@ function lib:CreateWindow(title)
 		Slider.Position = UDim2.new(0.0185185187, 0, 0.347517729, 0)
 		Slider.Size = UDim2.new(0, 390, 0, 45)
 		Slider.AutoButtonColor = false
-
+	
 		UIStroke_7.Parent = Slider
 		UIStroke_7.Color = Color3.fromRGB(82, 113, 255)
 		UIStroke_7.Transparency = 0.600
-
+	
 		UICorner_10.CornerRadius = UDim.new(0, 6)
 		UICorner_10.Parent = Slider
-
+	
 		Title_4.Name = "Title"
 		Title_4.Parent = Slider
 		Title_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -520,7 +540,7 @@ function lib:CreateWindow(title)
 		Title_4.TextSize = 17.000
 		Title_4.TextTransparency = 0.600
 		Title_4.TextXAlignment = Enum.TextXAlignment.Left
-
+	
 		SliderBack.Name = "SliderBack"
 		SliderBack.Parent = Slider
 		SliderBack.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -529,13 +549,13 @@ function lib:CreateWindow(title)
 		SliderBack.BorderSizePixel = 0
 		SliderBack.Position = UDim2.new(0.0230769236, 0, 0.688888907, 0)
 		SliderBack.Size = UDim2.new(0, 370, 0, 6)
-
+	
 		UIStroke_8.Parent = SliderBack
 		UIStroke_8.Color = Color3.fromRGB(51, 51, 51)
 		UIStroke_8.Thickness = 1.500
-
+	
 		UICorner_11.Parent = SliderBack
-
+	
 		Draggable.Name = "Draggable"
 		Draggable.Parent = SliderBack
 		Draggable.BackgroundColor3 = Color3.fromRGB(82, 113, 255)
@@ -543,9 +563,9 @@ function lib:CreateWindow(title)
 		Draggable.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Draggable.BorderSizePixel = 0
 		Draggable.Size = UDim2.new(0, 257, 0, 6)
-
+	
 		UICorner_12.Parent = Draggable
-
+	
 		Value.Name = "Value"
 		Value.Parent = Slider
 		Value.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -560,33 +580,33 @@ function lib:CreateWindow(title)
 		Value.TextSize = 17.000
 		Value.TextTransparency = 0.600
 		Value.TextXAlignment = Enum.TextXAlignment.Right
-
+	
 		local UIS = game:GetService("UserInputService")
 		local TweenService = game:GetService("TweenService")
 		local currentValue = min
 		local isDragging = false
-
+	
 		local function UpdateTransparency(isActive)
 			local targetTransparency = isActive and 0 or 0.6
-
+	
 			TweenService:Create(UIStroke_7, TweenInfo.new(0.2), {Transparency = targetTransparency}):Play()
 			TweenService:Create(Title_4, TweenInfo.new(0.2), {TextTransparency = targetTransparency}):Play()
 			TweenService:Create(Value, TweenInfo.new(0.2), {TextTransparency = targetTransparency}):Play()
 			TweenService:Create(Draggable, TweenInfo.new(0.2), {BackgroundTransparency = targetTransparency}):Play()
 		end
-
+	
 		local function UpdateSliderPosition()
 			local percentage = math.clamp((currentValue - min) / (max - min), 0, 1)
 			Value.Text = string.format("%.1f", currentValue)
 			Draggable.Size = UDim2.new(percentage, 0, 1, 0)
 			callback(currentValue)
 		end
-
+	
 		local function StartDragging(input)
 			isDragging = true
 			UpdateTransparency(true)
 		end
-
+	
 		local function UpdateDragging(input)
 			if not isDragging then return end
 			local sliderX = SliderBack.AbsolutePosition.X
@@ -596,20 +616,24 @@ function lib:CreateWindow(title)
 			currentValue = math.round(currentValue * 10) / 10
 			UpdateSliderPosition()
 		end
-
+	
 		local function StopDragging()
 			isDragging = false
 			UpdateTransparency(false)
 		end
-
+	
 		Slider.MouseButton1Down:Connect(StartDragging)
-		UIS.InputChanged:Connect(UpdateDragging)
+		UIS.InputChanged:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+				UpdateDragging(input)
+			end
+		end)
 		UIS.InputEnded:Connect(function(input)
-			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 				StopDragging()
 			end
 		end)
-
+	
 		UpdateSliderPosition()
 	end
 	
@@ -619,7 +643,7 @@ function lib:CreateWindow(title)
 		local UICorner_13 = Instance.new("UICorner")
 		local Title_5 = Instance.new("TextLabel")
 		local SelectedText = Instance.new("TextLabel")
-
+	
 		Dropdown.Name = "Dropdown"
 		Dropdown.Parent = TabParent
 		Dropdown.BackgroundColor3 = Color3.fromRGB(7, 9, 11)
@@ -628,13 +652,13 @@ function lib:CreateWindow(title)
 		Dropdown.Position = UDim2.new(0.0185185187, 0, 0, 0)
 		Dropdown.Size = UDim2.new(0, 390, 0, 36)
 		Dropdown.AutoButtonColor = false
-
+	
 		UIStroke_9.Parent = Dropdown
 		UIStroke_9.Color = Color3.fromRGB(82, 113, 255)
-
+	
 		UICorner_13.CornerRadius = UDim.new(0, 6)
 		UICorner_13.Parent = Dropdown
-
+	
 		Title_5.Name = "Title"
 		Title_5.Parent = Dropdown
 		Title_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -648,7 +672,7 @@ function lib:CreateWindow(title)
 		Title_5.TextColor3 = Color3.fromRGB(255, 255, 255)
 		Title_5.TextSize = 17.000
 		Title_5.TextXAlignment = Enum.TextXAlignment.Left
-
+	
 		SelectedText.Name = "SelectedText"
 		SelectedText.Parent = Dropdown
 		SelectedText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -662,17 +686,22 @@ function lib:CreateWindow(title)
 		SelectedText.TextColor3 = Color3.fromRGB(255, 255, 255)
 		SelectedText.TextSize = 17.000
 		SelectedText.TextXAlignment = Enum.TextXAlignment.Right
-
-		Dropdown.MouseButton1Click:Connect(function()
+	
+		local function onClick()
 			local currentIndex = table.find(options, SelectedText.Text) or 0
 			local nextIndex = (currentIndex % #options) + 1
 			SelectedText.Text = options[nextIndex]
-
+	
 			if callback then
 				callback(SelectedText.Text)
 			end
-		end)
+		end
+	
+		Dropdown.MouseButton1Click:Connect(onClick)
+		
+		Dropdown.TouchTap:Connect(onClick)
 	end
+	
 	
 	function lib:CreateInput(title, TabParent, TextHolder, callback)
 		local Input = Instance.new("ImageButton")
@@ -683,7 +712,7 @@ function lib:CreateWindow(title)
 		local UIStroke_11 = Instance.new("UIStroke")
 		local UICorner_15 = Instance.new("UICorner")
 		local TextBox = Instance.new("TextBox")
-
+	
 		Input.Name = "Input"
 		Input.Parent = TabParent
 		Input.BackgroundColor3 = Color3.fromRGB(7, 9, 11)
@@ -692,13 +721,13 @@ function lib:CreateWindow(title)
 		Input.Position = UDim2.new(0.359259248, 0, 0.769503534, 0)
 		Input.Size = UDim2.new(0, 390, 0, 36)
 		Input.AutoButtonColor = false
-
+	
 		UIStroke_10.Parent = Input
 		UIStroke_10.Color = Color3.fromRGB(82, 113, 255)
-
+	
 		UICorner_14.CornerRadius = UDim.new(0, 6)
 		UICorner_14.Parent = Input
-
+	
 		Title_6.Name = "Title"
 		Title_6.Parent = Input
 		Title_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -712,7 +741,7 @@ function lib:CreateWindow(title)
 		Title_6.TextColor3 = Color3.fromRGB(255, 255, 255)
 		Title_6.TextSize = 17.000
 		Title_6.TextXAlignment = Enum.TextXAlignment.Left
-
+	
 		Box.Name = "Box"
 		Box.Parent = Input
 		Box.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -721,13 +750,13 @@ function lib:CreateWindow(title)
 		Box.BorderSizePixel = 0
 		Box.Position = UDim2.new(0.77692306, 0, 0.138888896, 0)
 		Box.Size = UDim2.new(0, 80, 0, 25)
-
+	
 		UIStroke_11.Parent = Box
 		UIStroke_11.Color = Color3.fromRGB(82, 113, 255)
-
+	
 		UICorner_15.CornerRadius = UDim.new(0, 4)
 		UICorner_15.Parent = Box
-
+	
 		TextBox.Parent = Box
 		TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 		TextBox.BackgroundTransparency = 1.000
@@ -739,20 +768,32 @@ function lib:CreateWindow(title)
 		TextBox.Text = ""
 		TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextBox.TextSize = 16.000
-
+	
 		local function onSubmit()
 			local userInput = TextBox.Text
 			callback(userInput)
 		end
-
+	
+		local function onButtonClick()
+			onSubmit()
+		end
+	
+		Input.InputBegan:Connect(function(input, gameProcessed)
+			if not gameProcessed then
+				if input.UserInputType == Enum.UserInputType.Touch then
+					onButtonClick()
+				end
+			end
+		end)
+	
 		TextBox.FocusLost:Connect(function(enterPressed)
 			if enterPressed then
 				onSubmit()
 			end
 		end)
-
+	
 		Input.MouseButton1Click:Connect(function()
-			onSubmit()
+			onButtonClick()
 		end)
 	end
 
