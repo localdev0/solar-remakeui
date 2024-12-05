@@ -1,6 +1,7 @@
 ## Modified with Tween Switch
 ```lua
 local lib = {}
+local UIColor = Color3.fromRGB(83, 133, 255)
 
 function lib:CreateWindow(title)
 	
@@ -52,7 +53,7 @@ function lib:CreateWindow(title)
 	Icon.BorderSizePixel = 0
 	Icon.Size = UDim2.new(0, 73, 0, 51)
 	Icon.Image = "http://www.roblox.com/asset/?id=70944899239586"
-	Icon.ImageColor3 = Color3.fromRGB(82, 113, 255)
+	Icon.ImageColor3 = UIColor
 
 	Title.Name = "Title"
 	Title.Parent = TopBar
@@ -260,7 +261,7 @@ function lib:CreateTab(title)
         end
 
         Tab.TextTransparency = 0
-        Tab.BackgroundTransparency = 0
+        Tab.BackgroundTransparency = 0.6
 
         for _, item in pairs(Content:GetChildren()) do
             if item:IsA("ScrollingFrame") then
@@ -299,7 +300,7 @@ end
 		
 		Section.Name = title
 		Section.Parent = TabParent
-		Section.BackgroundColor3 = Color3.fromRGB(82, 113, 255)
+		Section.BackgroundColor3 = UIColor
 		Section.BackgroundTransparency = 0.700
 		Section.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Section.BorderSizePixel = 0
@@ -325,7 +326,7 @@ end
 		Button.AutoButtonColor = false
 	
 		UIStroke_12.Parent = Button
-		UIStroke_12.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_12.Color = UIColor
 	
 		UICorner_16.CornerRadius = UDim.new(0, 6)
 		UICorner_16.Parent = Button
@@ -353,7 +354,7 @@ end
 		MouseIcon.Position = UDim2.new(0.934615374, 0, 0.194444448, 0)
 		MouseIcon.Size = UDim2.new(0, 21, 0, 25)
 		MouseIcon.Image = "rbxassetid://12804017021"
-		MouseIcon.ImageColor3 = Color3.fromRGB(82, 113, 255)
+		MouseIcon.ImageColor3 = UIColor
 	
 		UIAspectRatioConstraint_4.Parent = MouseIcon
 	
@@ -392,7 +393,7 @@ end
 		Toggle.AutoButtonColor = false
 	
 		UIStroke_4.Parent = Toggle
-		UIStroke_4.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_4.Color = UIColor
 		UIStroke_4.Transparency = 0.500
 	
 		UICorner_7.CornerRadius = UDim.new(0, 6)
@@ -423,7 +424,7 @@ end
 		Slide_2.Size = UDim2.new(0, 50, 0, 25)
 	
 		UIStroke_5.Parent = Slide_2
-		UIStroke_5.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_5.Color = UIColor
 		UIStroke_5.Transparency = 0.500
 	
 		UICorner_8.CornerRadius = UDim.new(1, 0)
@@ -441,7 +442,7 @@ end
 		UIAspectRatioConstraint_3.Parent = Wheel_2
 	
 		UIStroke_6.Parent = Wheel_2
-		UIStroke_6.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_6.Color = UIColor
 		UIStroke_6.Transparency = 0.500
 	
 		UICorner_9.CornerRadius = UDim.new(1, 0)
@@ -520,7 +521,7 @@ end
 		Slider.AutoButtonColor = false
 	
 		UIStroke_7.Parent = Slider
-		UIStroke_7.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_7.Color = UIColor
 		UIStroke_7.Transparency = 0.600
 	
 		UICorner_10.CornerRadius = UDim.new(0, 6)
@@ -558,7 +559,7 @@ end
 	
 		Draggable.Name = "Draggable"
 		Draggable.Parent = SliderBack
-		Draggable.BackgroundColor3 = Color3.fromRGB(82, 113, 255)
+		Draggable.BackgroundColor3 = UIColor
 		Draggable.BackgroundTransparency = 0.600
 		Draggable.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Draggable.BorderSizePixel = 0
@@ -654,7 +655,7 @@ end
 		Dropdown.AutoButtonColor = false
 	
 		UIStroke_9.Parent = Dropdown
-		UIStroke_9.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_9.Color = UIColor
 	
 		UICorner_13.CornerRadius = UDim.new(0, 6)
 		UICorner_13.Parent = Dropdown
@@ -723,7 +724,7 @@ end
 		Input.AutoButtonColor = false
 	
 		UIStroke_10.Parent = Input
-		UIStroke_10.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_10.Color = UIColor
 	
 		UICorner_14.CornerRadius = UDim.new(0, 6)
 		UICorner_14.Parent = Input
@@ -752,7 +753,7 @@ end
 		Box.Size = UDim2.new(0, 80, 0, 25)
 	
 		UIStroke_11.Parent = Box
-		UIStroke_11.Color = Color3.fromRGB(82, 113, 255)
+		UIStroke_11.Color = UIColor
 	
 		UICorner_15.CornerRadius = UDim.new(0, 4)
 		UICorner_15.Parent = Box
