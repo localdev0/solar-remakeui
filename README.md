@@ -215,7 +215,7 @@ function lib:CreateTab(title)
 
     Tab.Name = "Tab"
     Tab.Parent = Navigation
-    Tab.BackgroundColor3 = Color3.fromRGB(42, 58, 130)
+    Tab.BackgroundColor3 = UIColor
     Tab.BackgroundTransparency = 1.000
     Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
     Tab.BorderSizePixel = 0
