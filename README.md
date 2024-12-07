@@ -255,7 +255,7 @@ function lib:CreateTab(title)
     local function onTabClick()
         for _, child in pairs(Navigation:GetChildren()) do
             if child:IsA("TextButton") then
-                child.TextTransparency = 0.8
+                child.TextTransparency = 0.6
                 child.BackgroundTransparency = 1
             end
         end
