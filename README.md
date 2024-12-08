@@ -327,6 +327,7 @@ end
 	
 		UIStroke_12.Parent = Button
 		UIStroke_12.Color = UIColor
+		UIStroke_12.Transparency = 0.3
 	
 		UICorner_16.CornerRadius = UDim.new(0, 6)
 		UICorner_16.Parent = Button
@@ -656,6 +657,7 @@ end
 	
 		UIStroke_9.Parent = Dropdown
 		UIStroke_9.Color = UIColor
+		UIStroke_9.Transparency = 0.3
 	
 		UICorner_13.CornerRadius = UDim.new(0, 6)
 		UICorner_13.Parent = Dropdown
@@ -725,6 +727,7 @@ end
 	
 		UIStroke_10.Parent = Input
 		UIStroke_10.Color = UIColor
+		UIStroke_10.Transparency = 0.3
 	
 		UICorner_14.CornerRadius = UDim.new(0, 6)
 		UICorner_14.Parent = Input
